@@ -1,0 +1,4 @@
+Nombre: Gabriel
+Apellido:Zerpa
+Grupo:LGS SecOps
+Rol o responsabilidad principal: Product Owner
