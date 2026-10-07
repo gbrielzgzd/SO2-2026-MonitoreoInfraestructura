@@ -1,0 +1,4 @@
+Nombre: Alvaro Santiago
+Apellido: Beltran Menini
+Grupo: LGS Secops
+Rol o responsabilidad principal: Scrum Master
