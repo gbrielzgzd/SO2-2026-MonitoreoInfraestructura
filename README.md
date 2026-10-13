@@ -1,82 +1,47 @@
 # Plataforma de Monitoreo y Observabilidad de Infraestructura TI
 
-Proyecto académico de Sistemas Operativos (SO2-2026).
+Proyecto académico de Sistemas Operativos (SO2-2026).  
+**Equipo:** LGS SecOps.
+
+## Estado real a 13/10/2026
+
+- **Entorno elegido por el equipo:** Proxmox y máquinas virtuales Linux.
+- **Métricas prioritarias elegidas:** CPU, RAM, disco y disponibilidad.
+- **Estado técnico informado por el equipo:** las herramientas todavía no se han instalado ni probado.
+- **Fecha de entrega comunicada:** 14/10/2026. Falta confirmar si se refiere a la aprobación del proyecto o a la entrega final.
+- **Cronograma previo:** el Gantt guardado en la biblioteca del equipo marca una entrega tentativa el 05/11/2026. Debe reconciliarse con la fecha de entrega comunicada para mañana.
 
 ## Descripción
-El proyecto propone una plataforma para recopilar, centralizar, visualizar y analizar métricas de infraestructura TI, con el objetivo de facilitar la detección preventiva de problemas.
 
-## Objetivo
-Desarrollar una plataforma de monitoreo y observabilidad que permita recopilar, centralizar, visualizar y analizar métricas de infraestructura TI e incorporar alertas automáticas.
+La propuesta busca centralizar la supervisión de infraestructura TI y ayudar a detectar problemas antes de que provoquen interrupciones. El informe previo plantea métricas, paneles y alertas como resultado esperado; todavía no hay evidencia registrada en este repositorio de una instalación o integración funcional.
 
-## Alcance
-Prototipo académico para supervisión de infraestructura TI. La implementación definitiva en una infraestructura productiva de gran escala queda fuera del alcance documentado actualmente.
+## Documentación del repositorio
 
-## Tecnologías propuestas
-- Prometheus
-- PostgreSQL + TimescaleDB
-- Grafana
-- Node Exporter / otros exporters
-- SNMP e ICMP
+- [Cuestionario de aprobación y estado del proyecto](docs/cuestionario_aprobacion.md)
+- [Definición del MVP y requisitos propuestos](docs/mvp_requisitos.md)
 
-Estas tecnologías aparecen en la propuesta del proyecto; la configuración e integración deben validarse durante la implementación.
+## Tecnologías
 
-## Estructura del repositorio
-```text
-.
-├── README.md
-├── .gitignore
-├── docs/
-│   ├── proyecto/
-│   │   ├── informe/
-│   │   ├── presentacion/
-│   │   └── gantt/
-│   ├── requisitos/
-│   ├── arquitectura/
-│   ├── diseno/
-│   ├── pruebas/
-│   ├── manuales/
-│   └── referencias/
-├── src/
-├── config/
-├── dashboards/
-├── database/
-│   ├── migrations/
-│   └── scripts/
-├── tests/
-│   ├── functional/
-│   └── integration/
-├── scripts/
-└── resources/
-    ├── diagrams/
-    ├── images/
-    └── examples/
-```
+El informe previo propone Prometheus, Grafana, Node Exporter u otros exporters, PostgreSQL + TimescaleDB, SNMP e ICMP. **Son tecnologías propuestas y no se consideran instaladas ni validadas.** La selección final del MVP debe confirmarse tras una prueba técnica.
 
-## Documentación
-Los documentos fuente del proyecto son el informe actualizado y el diagrama de Gantt. Deben ubicarse en:
-- `docs/proyecto/informe/`
-- `docs/proyecto/gantt/`
+## Alcance mínimo propuesto
 
-La presentación se añadirá en `docs/proyecto/presentacion/` cuando esté disponible.
+Demostrar en una VM Linux de prueba, alojada o disponible mediante Proxmox, métricas de CPU, RAM y disco, además de un indicador de disponibilidad, presentadas en un panel. Es una recomendación pendiente de aprobación del equipo/docente.
 
-## Estado actual
-La documentación inicial describe objetivos, alcance, requisitos propuestos, arquitectura general, tecnologías consideradas, riesgos y un cronograma tentativo. La implementación técnica debe añadirse y documentarse conforme se desarrolle.
+## Equipo
 
-## Flujo de trabajo
-1. Registrar cada tarea, bug o mejora como una GitHub Issue.
-2. Asignar responsable, área y prioridad.
-3. Crear una rama por tarea cuando corresponda.
-4. Vincular Pull Requests con las Issues.
-5. Actualizar el estado en GitHub Projects.
-6. Documentar pruebas y decisiones técnicas en `docs/`.
+- Gabriel Zerpa — Product Owner.
+- Leonardo Sebastian Garcia Mendoza — Developer.
+- Alvaro Santiago Beltran Menini — Scrum Master.
 
-## Seguridad
-No incluir contraseñas, tokens, claves privadas ni datos sensibles. Las configuraciones de ejemplo deben permanecer libres de credenciales.
+Las responsabilidades anteriores proceden de los archivos de integrantes del repositorio. Los entregables concretos por persona deben acordarse.
 
-## Cronograma
-Consultar el documento Gantt. Sus fechas son tentativas y deben contrastarse con el avance real.
+## Organización y seguridad
 
-## Referencias
+Registrar las decisiones y tareas en docs/, documentar pruebas con capturas o registros y actualizar el Gantt según el avance real. No subir contraseñas, tokens ni credenciales al repositorio.
+
+## Referencias técnicas incluidas en el informe previo
+
 - https://prometheus.io/docs/
 - https://grafana.com/docs/
 - https://docs.timescale.com/
