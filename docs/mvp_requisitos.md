@@ -1,88 +1,72 @@
 # MVP y requisitos propuestos
 
-**Proyecto:** Plataforma de Monitoreo y Observabilidad de Infraestructura TI  
+**Proyecto:** Plataforma de Monitoreo de Infraestructura TI  
 **Equipo:** LGS SecOps  
-**Última actualización:** 13/10/2026
+**Actualización:** 21/10/2026
 
-> Este documento es una propuesta de trabajo, no una constancia de implementación. El equipo indicó que todavía no ha instalado ni probado las herramientas.
+> Este documento registra el alcance tras la corrección del equipo: solo se permite utilizar Prometheus como herramienta de monitoreo. No afirma que la solución esté instalada ni probada.
 
-## Decisiones confirmadas por el equipo
+## Decisiones comunicadas
 
 - Entorno previsto: Proxmox y máquinas virtuales Linux.
-- Métricas prioritarias: CPU, RAM, disco y disponibilidad.
-- Estado técnico: las herramientas aún no se han instalado ni probado.
-- Fecha de entrega comunicada: 14/10/2026; falta confirmar si corresponde al cuestionario de aprobación o a la entrega final.
+- Métricas deseadas: CPU, RAM, disco y disponibilidad.
+- Restricción de herramientas: únicamente Prometheus.
+- Estado de instalación y pruebas: la última información disponible indicaba que las herramientas aún no estaban instaladas ni probadas; actualizar con evidencia nueva si cambió.
 
-## Contexto del informe previo
+## Restricción técnica crítica
 
-El informe propone centralizar métricas y ayudar a detectar fallas de forma preventiva. Propone Prometheus, Grafana, Node Exporter u otros exporters, PostgreSQL + TimescaleDB, SNMP e ICMP. Estas tecnologías todavía requieren instalación y validación. El Gantt previo marca una entrega tentativa el 05/11/2026, por lo que debe aclararse la diferencia con la fecha comunicada para mañana.
+Prometheus es principalmente un sistema de recopilación y consulta de series temporales. Normalmente obtiene métricas desde endpoints HTTP que exponen datos en un formato compatible.
 
-## MVP recomendado
+Prometheus por sí solo no obtiene automáticamente el uso de CPU, RAM y disco de una VM Linux externa ni verifica directamente la disponibilidad de un equipo externo. Para obtener esas métricas se necesita una fuente de datos compatible. La fuente puede requerir un exporter, un script o un endpoint propio, pero no se debe asumir que esos componentes están permitidos.
 
-La recomendación es iniciar con una sola VM Linux de prueba y demostrar:
+**Pregunta que debe resolverse con el docente:** ¿“solo Prometheus” significa que Prometheus es la única herramienta de monitoreo autorizada, permitiendo scripts/endpoints propios, o que está prohibido utilizar cualquier componente complementario?
 
-1. Recopilación de uso de CPU.
-2. Recopilación de uso de RAM.
-3. Recopilación de uso de disco.
-4. Detección de disponibilidad de la VM.
-5. Visualización de métricas en un panel.
-6. Una prueba documentada que demuestre la recolección y detección de disponibilidad.
+Hasta tener esa respuesta, las métricas de la VM no deben declararse implementadas ni garantizarse como técnicamente alcanzables bajo las reglas de la asignatura.
 
-El equipo y el docente deben aprobar el alcance antes de considerarlo definitivo.
+## MVP propuesto sujeto a aclaración
 
-## Requisitos funcionales propuestos
+1. Instalar y configurar Prometheus en una VM Linux autorizada.
+2. Definir los objetivos de recolección permitidos por el docente.
+3. Comprobar que Prometheus puede acceder a cada objetivo permitido.
+4. Ejecutar consultas PromQL sobre métricas realmente disponibles.
+5. Documentar qué indicadores se obtuvieron y cuáles no se pudieron obtener bajo la restricción.
+6. Guardar configuración, resultados y capturas de pruebas.
 
-| ID | Requisito | Criterio de aceptación propuesto |
+## Requisitos funcionales deseados
+
+| ID | Requisito | Condición de aceptación |
 |---|---|---|
-| RF-01 | Recoger CPU de la VM Linux. | La métrica aparece en el panel y cambia cuando varía la carga. |
-| RF-02 | Recoger uso de RAM. | El panel muestra la métrica de memoria de la VM. |
-| RF-03 | Recoger uso de disco. | El panel muestra el uso del disco monitorizado. |
-| RF-04 | Detectar disponibilidad. | Una VM disponible se identifica como activa y una interrupción de prueba se detecta. |
-| RF-05 | Centralizar la visualización. | El panel permite identificar la VM y consultar sus métricas recientes. |
-| RF-06 | Registrar la validación. | Se conserva captura o registro con resultado y observaciones de la prueba. |
+| RF-01 | Obtener métricas de CPU de la VM Linux. | Solo se considera cumplido si existe una fuente permitida y Prometheus recoge valores reales. |
+| RF-02 | Obtener métricas de RAM. | Solo se considera cumplido si existe una fuente permitida y se verifican los valores. |
+| RF-03 | Obtener métricas de disco. | Solo se considera cumplido si existe una fuente permitida y se verifican los valores. |
+| RF-04 | Comprobar disponibilidad. | Debe definirse un método permitido y probar respuestas disponibles/no disponibles. |
+| RF-05 | Consultar las métricas mediante Prometheus. | Una consulta PromQL devuelve datos reales para el objetivo configurado. |
+| RF-06 | Documentar la validación. | Se guardan comandos, configuración sin secretos, resultados y observaciones. |
 
-Estos criterios son propuestas iniciales; falta que el equipo los apruebe y defina umbrales numéricos si corresponden.
+RF-01 a RF-04 quedan condicionados a la fuente de métricas que permita la consigna. No se deben presentar como completados si no existe una fuente compatible autorizada.
 
-## Requisitos no funcionales propuestos
+## Componentes
 
-- **Seguridad:** no almacenar credenciales en GitHub; limitar accesos a los servicios del laboratorio.
-- **Usabilidad:** panel con nombres claros para VM y métricas.
-- **Mantenibilidad:** registrar pasos de instalación y configuración sin secretos.
-- **Confiabilidad de datos:** verificar que los datos se actualicen y anotar interrupciones o limitaciones.
+- **Permitido según la corrección:** Prometheus.
+- **No incluir sin autorización explícita:** Grafana, Node Exporter, Blackbox Exporter, PostgreSQL, TimescaleDB, otros exporters o herramientas de monitoreo.
+- **Pendiente de aclarar:** si se permite escribir un script o endpoint propio para exponer métricas de Linux. Esto no se debe instalar ni implementar como requisito confirmado hasta recibir autorización.
 
-No se han fijado métricas cuantitativas de rendimiento o disponibilidad; se deben acordar si el docente las exige.
+## Pruebas necesarias
 
-## Arquitectura técnica candidata
-
-1. **Infraestructura:** Proxmox y una VM Linux autorizada.
-2. **Recolección:** Prometheus y un exporter compatible, por ejemplo Node Exporter.
-3. **Visualización:** Grafana.
-4. **Almacenamiento adicional:** PostgreSQL + TimescaleDB aparecen en el informe anterior; confirmar si son necesarios para la demostración mínima.
-5. **Monitoreo de red:** SNMP e ICMP aparecen en el informe previo; se consideran fuera del primer MVP salvo que la evaluación lo requiera.
-
-La arquitectura es candidata, no está desplegada ni validada.
-
-## Plan inmediato propuesto
-
-- **13/10:** confirmar alcance, permisos y acceso a la VM; aprobar requisitos.
-- **14/10:** entregar la documentación de aprobación y presentar un plan realista de implementación. Si la fecha se refiere al proyecto completo, revisar inmediatamente el alcance y consultar al docente.
-- **Después de la aprobación:** instalar por etapas, comprobar cada componente, guardar evidencia y actualizar el Gantt según el avance real.
-
-## Riesgos y mitigación
-
-| Riesgo | Mitigación propuesta |
-|---|---|
-| Tiempo insuficiente para integrar todo el stack. | Empezar por una VM y las cuatro métricas prioritarias. |
-| Falta de acceso a Proxmox o a la VM. | Verificar permisos y conectividad antes de instalar. |
-| Error de configuración o incompatibilidad. | Probar componentes por separado y guardar registros de error. |
+- Verificar que el servicio Prometheus está activo.
+- Validar la sintaxis de su archivo de configuración.
+- Comprobar los objetivos de scraping permitidos.
+- Ejecutar consultas PromQL y conservar los resultados.
+- Si se autoriza una fuente de métricas para Linux, comprobar CPU, RAM, disco y disponibilidad por separado.
+- Registrar errores y limitaciones sin alterar los resultados para hacerlos parecer exitosos.
 
 ## Evidencia pendiente
 
-- Captura o registro de acceso a la VM de prueba.
-- Versiones de las herramientas que se instalen.
-- Configuración sin credenciales.
-- Capturas de métricas reales.
-- Resultado de la prueba de disponibilidad.
-- Gantt actualizado con responsables, fechas y dependencias reales.
+- Versión y estado real de Prometheus.
+- Archivo de configuración utilizado, sin credenciales.
+- Capturas de objetivos y consultas.
+- Resultado de cada prueba.
+- Confirmación del docente sobre scripts/endpoints propios.
+- Actualización del cronograma de acuerdo con el progreso real.
 
-No debe marcarse ninguna función como terminada hasta contar con la evidencia correspondiente.
+**Regla de documentación:** ninguna métrica se marca como funcional sin evidencia real y reproducible.
