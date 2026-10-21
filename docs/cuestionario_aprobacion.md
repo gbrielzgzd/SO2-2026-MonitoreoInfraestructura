@@ -1,141 +1,98 @@
-# Cuestionario de aprobación — Plataforma de Monitoreo y Observabilidad de Infraestructura TI
+# Cuestionario de aprobación — Plataforma de Monitoreo de Infraestructura TI
 
 **Curso:** Sistemas Operativos (SO2-2026)  
 **Equipo:** LGS SecOps  
-**Última revisión:** 13/10/2026  
-**Estado:** borrador para revisión del equipo; no equivale a aprobación del docente.
+**Actualización:** 21/10/2026  
+**Estado:** documento de trabajo; no equivale a aprobación del docente.
 
 ## Cómo leer este documento
 
-- **Confirmado por el equipo:** información indicada directamente por el equipo.
-- **Registrado en documentos previos:** información que aparece en el informe o Gantt guardado del proyecto.
-- **Propuesta pendiente de aprobación:** recomendación que aún debe aceptar el equipo.
-- **Pendiente:** dato sin evidencia suficiente.
+- **Confirmado por el equipo:** información comunicada directamente por el equipo.
+- **Registrado en documentos previos:** información que aparecía en el informe o Gantt anterior.
+- **Propuesta pendiente de aprobación:** recomendación aún no aceptada formalmente.
+- **Pendiente:** dato que necesita aclaración o evidencia.
 
-## 1. Problema y valor
+## 1. Problema y objetivo
 
-**Registrado en el informe:** la propuesta busca resolver la detección tardía de fallas en infraestructura TI cuando no existe una vista centralizada de métricas y alertas. Los posibles usuarios descritos son administradores de sistemas/redes, personal de soporte y responsables de infraestructura.
+El proyecto busca monitorear infraestructura TI sobre Proxmox y máquinas virtuales Linux, con interés en CPU, RAM, disco y disponibilidad.
 
-**Pendiente de validación:** documentar evidencia concreta del problema en el entorno de prueba. El informe describe el problema general, pero no se ha documentado una entrevista ni una prueba de diagnóstico.
+Las métricas deseadas no deben describirse como implementadas hasta que Prometheus las recoja y se presenten resultados reales.
 
-**Explicación breve propuesta:** “El proyecto busca que soporte revise desde un panel el estado de máquinas virtuales Linux y detecte si una máquina deja de responder o consume demasiados recursos, en vez de descubrirlo únicamente cuando aparece una falla”. Debe ser revisada y aprobada por el equipo.
+## 2. Restricción tecnológica comunicada
 
-## 2. Objetivos y éxito
+El equipo informó que el docente corrigió el proyecto para permitir **únicamente Prometheus** como herramienta de monitoreo.
 
-**Objetivo registrado en el informe:** desarrollar una plataforma que recopile, centralice, visualice y analice métricas de infraestructura TI e incorpore alertas automáticas.
+Por tanto, el diseño actualizado no debe incluir Grafana, Node Exporter, Blackbox Exporter, PostgreSQL, TimescaleDB ni otras herramientas como parte de la solución sin autorización explícita.
 
-**Entorno confirmado por el equipo:** Proxmox y máquinas virtuales Linux.  
-**Métricas confirmadas por el equipo:** CPU, RAM, disco y disponibilidad.  
-**Estado confirmado:** las herramientas todavía no se han instalado ni probado.
+## 3. Aclaración técnica necesaria
 
-**Criterios de éxito propuestos para el MVP:**
-1. Recoger CPU, RAM y uso de disco de una VM Linux de prueba.
-2. Distinguir si la VM está disponible o no responde.
-3. Mostrar las métricas en un panel.
-4. Demostrar una prueba de indisponibilidad o condición definida y registrar el resultado.
-5. Documentar instalación, configuración y limitaciones.
+Prometheus recopila métricas de endpoints que exponen datos en un formato compatible. Por sí solo no obtiene automáticamente las métricas de CPU, RAM y disco de una VM Linux externa ni verifica directamente la disponibilidad de ese equipo.
 
-Son propuestas: el equipo debe confirmar el número de VM, los umbrales y las pruebas viables.
+Debe consultarse al docente:
 
-## 3. Usuarios y requisitos
+**¿La restricción “solo Prometheus” permite crear un script o endpoint propio que exponga métricas para que Prometheus las recoja, siempre que no se instale otra herramienta de monitoreo?**
 
-**Usuarios propuestos en el informe:** administradores de red/sistemas, soporte TI y gestores de infraestructura. Para el MVP académico se recomienda como usuario primario al integrante que administra el entorno y revisa el panel.
+Esta decisión afecta la viabilidad de los requisitos RF-01 a RF-04. Hasta que se aclare, la documentación no debe prometer que todas las métricas del proyecto original podrán obtenerse.
 
-### Requisitos funcionales propuestos
-- RF-01: recopilar uso de CPU de las VM Linux configuradas.
-- RF-02: recopilar uso de memoria RAM.
-- RF-03: recopilar uso de disco.
-- RF-04: mostrar la disponibilidad de la VM monitorizada.
-- RF-05: mostrar las métricas en un panel centralizado.
-- RF-06: permitir una prueba demostrable de indisponibilidad o condición crítica y registrar el resultado.
+## 4. Requisitos deseados
 
-### Criterios de aceptación propuestos
-- RF-01 a RF-03: la métrica aparece en el panel y cambia cuando cambia el uso del recurso.
-- RF-04: el panel identifica una VM configurada como disponible y detecta una interrupción de prueba.
-- RF-05: el panel permite identificar la VM y consultar valores recientes.
-- RF-06: el equipo conserva una captura o registro de la prueba y anota el resultado.
+- RF-01: obtener uso de CPU de la VM Linux.
+- RF-02: obtener uso de RAM.
+- RF-03: obtener uso de disco.
+- RF-04: comprobar disponibilidad.
+- RF-05: consultar los datos disponibles mediante Prometheus.
+- RF-06: documentar pruebas, resultados y limitaciones.
 
-No se afirma que estas funciones estén implementadas. Los umbrales numéricos quedan pendientes de acuerdo.
+RF-01 a RF-04 están condicionados a una fuente de métricas permitida y comprobada. RF-05 y RF-06 pueden validarse con los objetivos y datos que estén disponibles bajo la consigna.
 
-## 4. Alcance
+## 5. Alcance mínimo propuesto
 
-**Confirmado:** Proxmox y VM Linux; métricas prioritarias CPU, RAM, disco y disponibilidad.
+1. Instalar y configurar Prometheus en un entorno Linux autorizado.
+2. Confirmar los objetivos de scraping permitidos.
+3. Validar la configuración y conectividad.
+4. Ejecutar consultas PromQL con métricas reales disponibles.
+5. Documentar resultados y limitaciones.
+6. Si el docente autoriza una fuente propia de métricas, ampliar las pruebas a CPU, RAM, disco y disponibilidad de la VM.
 
-**Alcance mínimo propuesto:** demostrar el monitoreo de una VM Linux de prueba, con las tres métricas de recursos y un indicador de disponibilidad visibles en un panel.
+Este alcance es una propuesta y no una afirmación de implementación terminada.
 
-**Fuera del MVP inicial, salvo que la evaluación lo exija:** monitoreo de routers/switches por SNMP, múltiples canales de notificación, trazas distribuidas, despliegue productivo de gran escala y alta disponibilidad del propio sistema de monitoreo.
+## 6. Seguridad y calidad
 
-**Pendiente:** confirmar qué VM estará disponible, permisos administrativos y funciones exigidas por la evaluación.
+- No guardar contraseñas, tokens ni credenciales en GitHub.
+- No exponer servicios a redes no autorizadas.
+- Documentar los puertos y permisos que realmente se utilicen.
+- Guardar el archivo de configuración usado y validar su sintaxis.
+- Conservar evidencia de las consultas y pruebas ejecutadas.
+- Distinguir en el informe resultados reales, propuestas y limitaciones.
 
-## 5. MVP
+## 7. Estado técnico
 
-La primera versión funcional recomendada se limita a: preparar o seleccionar una VM Linux autorizada; instalar una herramienta de recolección y un exporter compatible; recoger CPU, RAM y disco; configurar la detección de disponibilidad; visualizar los datos; ejecutar y registrar una prueba básica.
+La última información técnica disponible indicaba que las herramientas aún no se habían instalado ni probado. Si el estado ha cambiado, actualizar este apartado con evidencia, no solo con una declaración.
 
-**Tecnologías propuestas en el informe anterior:** Prometheus, Grafana, Node Exporter u otros exporters, PostgreSQL + TimescaleDB, SNMP e ICMP. El equipo confirma que aún no se han instalado ni probado. Se recomienda empezar por la ruta mínima viable y añadir almacenamiento o monitoreo de red solo si resulta necesario y alcanzable. La simplificación requiere aprobación del equipo/docente.
+## 8. Preguntas pendientes
 
-## 6. Diseño y viabilidad técnica
+- [ ] ¿Se permite crear scripts/endpoints propios para exponer métricas de Linux?
+- [ ] ¿Qué método de disponibilidad acepta el docente?
+- [ ] ¿La evaluación exige CPU, RAM, disco y disponibilidad de la VM externa, o basta con demostrar Prometheus y sus métricas disponibles?
+- [ ] ¿Qué fecha de entrega y entregables siguen vigentes tras la corrección?
+- [ ] ¿Quién realizará cada instalación, prueba y revisión?
 
-**Entorno confirmado:** Proxmox y VM Linux. **Herramientas instaladas/probadas:** ninguna, según la respuesta del equipo.
+## 9. Equipo
 
-**Stack propuesto en el informe, sin validar en la práctica:** Prometheus para recolectar métricas; Node Exporter u otro exporter para métricas Linux; Grafana para visualizar; PostgreSQL + TimescaleDB para almacenamiento histórico; SNMP/ICMP para dispositivos de red. La necesidad de la base de datos adicional y del monitoreo de red para el MVP debe revisarse.
+Responsabilidades registradas en los archivos de integrantes:
+- Gabriel Zerpa — Product Owner.
+- Leonardo Sebastian Garcia Mendoza — Developer.
+- Alvaro Santiago Beltran Menini — Scrum Master.
 
-**Pruebas técnicas prioritarias:** comprobar acceso a la VM, exposición de métricas por el exporter, recolección por Prometheus y visualización en el panel. Registrar errores y no declarar una integración terminada sin evidencia.
+## 10. Criterio de aprobación del MVP
 
-## 7. Datos, seguridad y calidad
+El MVP solo debe declararse listo cuando:
+1. La configuración de Prometheus sea válida.
+2. Los objetivos permitidos tengan estado verificable.
+3. Las consultas utilizadas devuelvan datos reales.
+4. Los resultados se documenten con capturas o registros.
+5. Las limitaciones impuestas por el uso exclusivo de Prometheus estén explicadas.
 
-**Datos previstos:** métricas de CPU, RAM, disco y estado de disponibilidad de las VM Linux.
+## Fuentes y límites
 
-**Pendiente:** frecuencia de recolección, retención, umbrales, permisos, puertos expuestos y notificaciones.
-
-**Medidas mínimas recomendadas:** no subir contraseñas ni tokens; limitar el acceso a paneles y servicios al laboratorio; documentar puertos y permisos necesarios; registrar versiones y configuraciones sin credenciales.
-
-**Pruebas propuestas:** prueba por componente, integración de recolección y panel, prueba de disponibilidad y revisión de resultados mediante capturas o registros. No hay resultados de prueba confirmados todavía.
-
-## 8. Plan de desarrollo y fecha
-
-**Fecha de entrega comunicada:** mañana, 14/10/2026. Falta confirmar si se refiere al cuestionario de aprobación o a la entrega final del proyecto.
-
-**Gantt previo:** el archivo “Diagrama_Gantt_Mejorado_Monitoreo_TI.pdf” presenta un cronograma tentativo de octubre a noviembre de 2026 y marca presentación/entrega para el 5 de noviembre. El informe previo también incluye ese calendario tentativo. Las fechas no demuestran que las tareas se hayan completado.
-
-**Conflicto de planificación:** el Gantt contempla tareas de instalación/configuración que, según el equipo, todavía no han comenzado. Debe actualizarse al avance real y priorizar el MVP.
-
-### Plan de choque propuesto para el 14/10
-- 13/10: confirmar alcance mínimo, accesos a Proxmox/VM Linux y responsabilidades; preparar documentación de aprobación.
-- 14/10: presentar la documentación de aprobación y un plan realista de instalación y pruebas.
-- Después de la aprobación: instalar por etapas, validar cada componente y actualizar el Gantt según los resultados.
-
-Este plan es una propuesta, no una afirmación de tareas ya realizadas.
-
-## 9. Equipo y riesgos
-
-**Responsabilidades registradas en los archivos de integrantes:** Gabriel Zerpa — Product Owner; Leonardo Sebastian Garcia Mendoza — Developer; Alvaro Santiago Beltran Menini — Scrum Master.
-
-### Riesgos principales propuestos
-1. **Tiempo insuficiente para integrar todo el stack.** Mitigación: reducir el MVP a una VM y priorizar las cuatro métricas.
-2. **Falta de acceso/conectividad a Proxmox o la VM.** Mitigación: verificar permisos y red antes de instalar.
-3. **Problemas de configuración o incompatibilidad.** Mitigación: probar componentes por separado y guardar registros.
-
-El equipo debe validar los riesgos, asignar responsables y acordar la revisión e integración de cambios.
-
-## 10. Preparación para comenzar
-
-- [ ] Confirmar objetivo del MVP y criterios de aceptación.
-- [ ] Confirmar acceso autorizado a Proxmox y a una VM Linux.
-- [ ] Aprobar el conjunto mínimo de herramientas.
-- [ ] Asignar responsables y tareas inmediatas.
-- [ ] Registrar decisiones y actualizar el Gantt.
-- [ ] Definir cómo guardar evidencia de instalación, métricas y pruebas.
-
-Las casillas quedan sin marcar porque no se ha aportado evidencia de que estén completadas.
-
-## 11. Prueba de fracaso
-
-El proyecto podría retrasarse si no hay acceso a las VM, si se intenta implementar todo el alcance de red/almacenamiento/alertas a la vez o si no se valida la conectividad entre componentes. La mitigación recomendada es comenzar con una VM Linux, demostrar las métricas prioritarias y añadir funciones solo después de que la base funcione.
-
-## Documentos fuente consultados
-
-- “Informe_Actualizado_Plataforma_Monitoreo_TI.docx/.pdf”: problema, objetivo, tecnologías propuestas, requisitos generales, riesgos y resultados esperados.
-- “Diagrama_Gantt_Mejorado_Monitoreo_TI.pdf”: cronograma tentativo octubre/noviembre de 2026.
-- Respuestas del equipo: Proxmox + VM Linux; CPU/RAM/disco/disponibilidad; herramientas no instaladas ni probadas; fecha comunicada 14/10/2026.
-
-Mantener la documentación sincronizada con evidencia real. Una propuesta no debe presentarse como hecho hasta que el equipo la confirme o implemente.
+Este documento conserva el contexto del informe y Gantt anteriores, pero adapta la propuesta a la restricción comunicada por el equipo. No se han aportado resultados de instalación o pruebas que permitan afirmar que el sistema ya funciona.
