@@ -1,32 +1,40 @@
-# Plataforma de Monitoreo y Observabilidad de Infraestructura TI
+# Plataforma de Monitoreo de Infraestructura TI
 
 Proyecto académico de Sistemas Operativos (SO2-2026).  
 **Equipo:** LGS SecOps.
 
-## Estado real a 13/10/2026
+## Estado del proyecto
 
-- **Entorno elegido por el equipo:** Proxmox y máquinas virtuales Linux.
-- **Métricas prioritarias elegidas:** CPU, RAM, disco y disponibilidad.
-- **Estado técnico informado por el equipo:** las herramientas todavía no se han instalado ni probado.
-- **Fecha de entrega comunicada:** 14/10/2026. Falta confirmar si se refiere a la aprobación del proyecto o a la entrega final.
-- **Cronograma previo:** el Gantt guardado en la biblioteca del equipo marca una entrega tentativa el 05/11/2026. Debe reconciliarse con la fecha de entrega comunicada para mañana.
+- **Entorno previsto:** Proxmox y máquinas virtuales Linux.
+- **Métricas requeridas por el equipo:** CPU, RAM, disco y disponibilidad.
+- **Restricción indicada por el equipo:** solo se permite utilizar Prometheus como herramienta de monitoreo.
+- **Estado técnico informado previamente:** las herramientas todavía no se habían instalado ni probado. Actualizar este dato cuando existan evidencias nuevas.
+- **Implementación:** no se debe considerar funcional hasta que se documenten pruebas reales.
 
 ## Descripción
 
-La propuesta busca centralizar la supervisión de infraestructura TI y ayudar a detectar problemas antes de que provoquen interrupciones. El informe previo plantea métricas, paneles y alertas como resultado esperado; todavía no hay evidencia registrada en este repositorio de una instalación o integración funcional.
+El proyecto busca monitorear infraestructura TI en máquinas virtuales Linux y ayudar a detectar problemas de recursos o disponibilidad. El alcance debe respetar la restricción de utilizar únicamente Prometheus como herramienta de monitoreo.
 
-## Documentación del repositorio
+## Documentación
 
 - [Cuestionario de aprobación y estado del proyecto](docs/cuestionario_aprobacion.md)
 - [Definición del MVP y requisitos propuestos](docs/mvp_requisitos.md)
 
-## Tecnologías
+## Herramientas y limitaciones
 
-El informe previo propone Prometheus, Grafana, Node Exporter u otros exporters, PostgreSQL + TimescaleDB, SNMP e ICMP. **Son tecnologías propuestas y no se consideran instaladas ni validadas.** La selección final del MVP debe confirmarse tras una prueba técnica.
+Prometheus es la única herramienta de monitoreo autorizada según la corrección comunicada por el equipo. No se debe incluir Grafana, Node Exporter, Blackbox Exporter, PostgreSQL, TimescaleDB ni otras herramientas como parte de la solución sin autorización explícita del docente.
 
-## Alcance mínimo propuesto
+**Limitación técnica que debe resolverse:** Prometheus recopila métricas a través de endpoints HTTP que exponen datos en formato compatible. Por sí solo, Prometheus no expone automáticamente las métricas internas de CPU, RAM y disco de cualquier VM Linux, ni comprueba por sí mismo la disponibilidad de un equipo externo. El equipo debe confirmar con el docente si se permiten scripts o endpoints propios que expongan métricas, sin instalar herramientas adicionales. Si no se permite ningún componente complementario, el alcance medible podría limitarse a las métricas internas del propio Prometheus y no cubrir las cuatro métricas del proyecto original.
 
-Demostrar en una VM Linux de prueba, alojada o disponible mediante Proxmox, métricas de CPU, RAM y disco, además de un indicador de disponibilidad, presentadas en un panel. Es una recomendación pendiente de aprobación del equipo/docente.
+## Alcance propuesto pendiente de validación
+
+1. Instalar y configurar Prometheus.
+2. Confirmar qué endpoints de métricas están permitidos por la consigna.
+3. Probar consultas y reglas de Prometheus con datos disponibles.
+4. Documentar explícitamente qué métricas pueden obtenerse bajo la restricción.
+5. Guardar configuraciones, pruebas y evidencias reales.
+
+No se debe afirmar que CPU, RAM, disco o disponibilidad de las VM están monitorizados hasta comprobar cómo se obtienen y demostrarlo con resultados reales.
 
 ## Equipo
 
@@ -34,14 +42,12 @@ Demostrar en una VM Linux de prueba, alojada o disponible mediante Proxmox, mét
 - Leonardo Sebastian Garcia Mendoza — Developer.
 - Alvaro Santiago Beltran Menini — Scrum Master.
 
-Las responsabilidades anteriores proceden de los archivos de integrantes del repositorio. Los entregables concretos por persona deben acordarse.
+Las responsabilidades proceden de los archivos de integrantes del repositorio; los entregables concretos por persona deben acordarse.
 
 ## Organización y seguridad
 
-Registrar las decisiones y tareas en docs/, documentar pruebas con capturas o registros y actualizar el Gantt según el avance real. No subir contraseñas, tokens ni credenciales al repositorio.
+Registrar las decisiones en `docs/`, documentar pruebas con capturas o registros y actualizar el cronograma según el avance real. No subir contraseñas, tokens ni credenciales al repositorio.
 
-## Referencias técnicas incluidas en el informe previo
+## Documentación oficial
 
 - https://prometheus.io/docs/
-- https://grafana.com/docs/
-- https://docs.timescale.com/
