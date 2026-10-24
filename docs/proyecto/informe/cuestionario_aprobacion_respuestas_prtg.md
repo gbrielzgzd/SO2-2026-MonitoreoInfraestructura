@@ -146,10 +146,16 @@ La falta de acceso a la infraestructura, permisos insuficientes, incompatibilida
 ## 9. Equipo y riesgos
 
 **41. ¿Cada integrante tiene una responsabilidad concreta y verificable?**  
-No se indican nombres ni responsabilidades individuales en el informe. El equipo debe asignar tareas y criterios de finalización en GitHub Issues o Projects, evitando inventar asignaciones en este documento.
+Tomando como referencia los roles que ya figuran en el README y en los archivos de integrantes del repositorio, se propone distribuir el trabajo de la siguiente manera. Es una asignación inicial basada en los roles existentes y debe ser revisada y aceptada por el equipo:
+
+- **Gabriel Zerpa — Product Owner:** definir y priorizar los requisitos del monitoreo; coordinar la confirmación del alcance del MVP; mantener claros los criterios de aceptación para disponibilidad, CPU, RAM y disco; y validar con el equipo que las entregas respondan a las necesidades del proyecto.
+- **Leonardo Sebastian Garcia Mendoza — Developer:** liderar la preparación técnica de PRTG; documentar y realizar, una vez autorizado el entorno, la configuración de dispositivos y sensores; revisar los datos y consultas disponibles; y registrar configuraciones y resultados técnicos sin incluir credenciales.
+- **Alvaro Santiago Beltran Menini — Scrum Master:** coordinar el seguimiento del Gantt y GitHub Projects; organizar Issues, dependencias y bloqueos; facilitar la revisión periódica del avance; y verificar que las tareas tengan responsables, evidencias y estado actualizado.
+
+**Trabajo compartido:** las pruebas de aceptación, revisión de resultados, documentación final y decisiones sobre cambios de alcance deben revisarse entre los integrantes. Estas responsabilidades son una propuesta derivada de los roles registrados, no evidencia de que ya hayan sido formalmente aprobadas.
 
 **42. ¿Existe un mecanismo acordado para revisar e integrar el trabajo?**  
-El repositorio GitHub puede servir como centro de coordinación. Se recomienda trabajar mediante Issues para tareas, Projects para seguimiento, ramas y Pull Requests cuando haya cambios de archivos o configuración documentada, y revisión por otro integrante. El acuerdo formal del equipo debe confirmarse.
+Se propone usar GitHub como centro de coordinación: Gabriel prioriza los requisitos y confirma los criterios de aceptación; Leonardo documenta los cambios técnicos y las pruebas de configuración; y Alvaro mantiene el seguimiento de tareas, fechas, dependencias y bloqueos. Cada actividad debe registrarse como Issue con responsable, resultado esperado y evidencia de cierre. GitHub Projects puede mostrar el estado y el Gantt debe actualizarse según el avance real. Los cambios importantes en documentación o configuración deben revisarse por otro integrante antes de integrarse. Este mecanismo se propone para organizar el trabajo; el equipo todavía debe confirmar que lo adopta.
 
 **43. ¿Cuáles son los tres riesgos principales?**  
 1. PRTG o los sensores no pueden obtener las métricas requeridas en el entorno disponible.  
@@ -176,7 +182,7 @@ Deben precisarse los sensores disponibles para cada sistema, el método de acces
 No puede afirmarse que falte un recurso específico sin verificarlo. Es necesario comprobar acceso al entorno Proxmox/Linux, conectividad, credenciales autorizadas, equipo donde ejecutar PRTG y condiciones de uso aplicables. Los faltantes deben registrarse antes de depender de ellos.
 
 **49. Si mañana comenzaran a programar, ¿cada integrante sabría qué construir primero?**  
-No se puede confirmar, porque no se han documentado aquí las asignaciones individuales. El primer paso recomendado es una tarea de validación piloto: identificar un dispositivo, comprobar conectividad, configurar los sensores esenciales y documentar el resultado. Después se distribuyen las tareas restantes.
+Con la distribución inicial propuesta, el primer trabajo sería coordinado: Gabriel definiría y priorizaría el alcance del piloto y sus criterios de aceptación; Leonardo realizaría la validación técnica de PRTG con un dispositivo autorizado, comprobando conectividad y sensores compatibles; y Alvaro registraría la tarea, las dependencias, los bloqueos y las fechas en GitHub Projects/Gantt. Los integrantes revisarían juntos los resultados antes de ampliar el monitoreo. Esta secuencia es una propuesta de trabajo, no una confirmación de que el piloto ya se haya ejecutado.
 
 **50. ¿Un nuevo integrante comprendería el problema, el MVP y el siguiente trabajo solo con el repositorio?**  
 El informe de PRTG explica la orientación técnica, las métricas y las pruebas propuestas. Para que la incorporación sea completa, el repositorio debe mantener también el problema, los objetivos aprobados, el MVP definitivo, el inventario, las decisiones, el Gantt actualizado, las Issues y las evidencias de ejecución.
@@ -194,11 +200,12 @@ Se propone validar PRTG temprano con una prueba piloto, reducir el alcance al MV
 La propuesta de monitoreo con PRTG está definida a nivel inicial: se pretende supervisar disponibilidad, CPU, RAM y disco en un entorno Proxmox/Linux, y validar la configuración mediante pruebas documentadas. No obstante, la documentación disponible no demuestra que la herramienta esté instalada o funcionando, ni confirma responsables, cronograma detallado, inventario definitivo o resultados de pruebas.
 
 **Próximas acciones recomendadas:**
-1. Aprobar el alcance y los criterios de aceptación del MVP.
-2. Confirmar recursos, acceso, conectividad y condiciones de uso de PRTG.
-3. Realizar una prueba piloto y guardar evidencias sin incluir credenciales.
-4. Actualizar Gantt/GitHub Projects con tareas, responsables, estimaciones y dependencias.
-5. Actualizar este cuestionario con resultados reales cuando se complete cada validación.
+1. Revisar y aprobar la distribución inicial de responsabilidades propuesta para Gabriel Zerpa (Product Owner), Leonardo Sebastian Garcia Mendoza (Developer) y Alvaro Santiago Beltran Menini (Scrum Master).
+2. Aprobar el alcance y los criterios de aceptación del MVP.
+3. Confirmar recursos, acceso, conectividad y condiciones de uso de PRTG.
+4. Realizar una prueba piloto y guardar evidencias sin incluir credenciales.
+5. Actualizar Gantt/GitHub Projects con tareas, responsables, estimaciones y dependencias.
+6. Actualizar este cuestionario con resultados reales cuando se complete cada validación.
 
 ## Referencias
 
